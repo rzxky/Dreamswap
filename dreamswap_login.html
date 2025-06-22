@@ -1,0 +1,679 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DreamSwap - Enter the Dream Network</title>
+    <link href="https://fonts.googleapis.com/css2?family=Comic+Neue:wght@300;400;700&family=Courier+Prime:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Comic Neue', cursive;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="stars" patternUnits="userSpaceOnUse" width="10" height="10"><circle cx="5" cy="5" r="0.5" fill="%23ffffff" opacity="0.4"/></pattern></defs><rect width="100" height="100" fill="%230a0a2e"/><rect width="100" height="100" fill="url(%23stars)"/></svg>'), 
+                    linear-gradient(45deg, #0a0a2e 0%, #1a1a4a 25%, #2a2a6a 50%, #1a1a4a 75%, #0a0a2e 100%);
+            background-size: 200px 200px, 100% 100%;
+            animation: starfield 30s linear infinite;
+            color: #ffffff;
+            overflow-x: hidden;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        @keyframes starfield {
+            0% { background-position: 0 0, 0 0; }
+            100% { background-position: 200px 200px, 0 0; }
+        }
+
+        .container {
+            max-width: 500px;
+            width: 90%;
+            padding: 20px;
+        }
+
+        /* Header */
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .logo {
+            font-family: 'Courier Prime', monospace;
+            font-size: 48px;
+            font-weight: 700;
+            color: #fff;
+            text-shadow: 3px 3px 0px #e91e63, -2px -2px 0px #64b5f6;
+            margin-bottom: 10px;
+            animation: logoGlow 2s ease-in-out infinite alternate;
+        }
+
+        @keyframes logoGlow {
+            0% { text-shadow: 3px 3px 0px #e91e63, -2px -2px 0px #64b5f6; }
+            100% { text-shadow: 3px 3px 20px #e91e63, -2px -2px 20px #64b5f6; }
+        }
+
+        .tagline {
+            font-size: 16px;
+            color: #81c784;
+            text-shadow: 1px 1px 0px #000;
+            margin-bottom: 20px;
+        }
+
+        /* Form Container */
+        .form-container {
+            background: #fff;
+            border: 4px solid #e91e63;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 0 30px rgba(233, 30, 99, 0.6);
+            position: relative;
+        }
+
+        .form-header {
+            background: linear-gradient(45deg, #e91e63, #9c27b0);
+            padding: 20px;
+            text-align: center;
+            border-bottom: 3px solid #000;
+        }
+
+        .form-tabs {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .tab-button {
+            background: rgba(255, 255, 255, 0.2);
+            border: 2px solid #fff;
+            border-radius: 15px;
+            padding: 10px 20px;
+            color: #fff;
+            font-weight: 700;
+            font-size: 14px;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-shadow: 1px 1px 0px #000;
+        }
+
+        .tab-button.active {
+            background: #fff;
+            color: #e91e63;
+            text-shadow: none;
+            transform: scale(1.1);
+        }
+
+        .tab-button:hover {
+            transform: scale(1.05);
+        }
+
+        /* Form Content */
+        .form-content {
+            padding: 30px;
+            background: #f9f9f9;
+            color: #000;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: 700;
+            margin-bottom: 8px;
+            color: #9c27b0;
+            text-transform: uppercase;
+            font-size: 14px;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 12px;
+            border: 3px solid #64b5f6;
+            border-radius: 10px;
+            font-size: 16px;
+            font-family: inherit;
+            background: #fff;
+            transition: all 0.3s ease;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: #e91e63;
+            box-shadow: 0 0 10px rgba(233, 30, 99, 0.3);
+            transform: scale(1.02);
+        }
+
+        /* Dream Personality Quiz */
+        .quiz-section {
+            display: none;
+            margin-top: 20px;
+            padding: 20px;
+            background: linear-gradient(135deg, #f8bbd9, #b3e5fc);
+            border: 2px solid #9c27b0;
+            border-radius: 15px;
+        }
+
+        .quiz-section.active {
+            display: block;
+            animation: quizSlide 0.5s ease-out;
+        }
+
+        @keyframes quizSlide {
+            0% { transform: translateY(20px); opacity: 0; }
+            100% { transform: translateY(0); opacity: 1; }
+        }
+
+        .quiz-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: #e91e63;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .quiz-question {
+            margin-bottom: 15px;
+        }
+
+        .quiz-question label {
+            font-weight: 400;
+            color: #000;
+            margin-bottom: 5px;
+            text-transform: none;
+        }
+
+        .radio-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .radio-option {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .radio-option:hover {
+            background: rgba(233, 30, 99, 0.1);
+        }
+
+        .radio-option input[type="radio"] {
+            margin: 0;
+        }
+
+        /* Submit Button */
+        .submit-button {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(45deg, #e91e63, #81c784);
+            color: #fff;
+            border: 3px solid #fff;
+            border-radius: 25px;
+            font-size: 18px;
+            font-weight: 700;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-shadow: 1px 1px 2px #000;
+            box-shadow: 0 5px 15px rgba(233, 30, 99, 0.5);
+            animation: buttonPulse 2s ease-in-out infinite;
+        }
+
+        @keyframes buttonPulse {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-2px); }
+        }
+
+        .submit-button:hover {
+            transform: scale(1.05) translateY(-3px);
+            box-shadow: 0 8px 25px rgba(129, 199, 132, 0.7);
+        }
+
+        .submit-button:active {
+            transform: scale(0.98);
+        }
+
+        /* Social Login */
+        .social-login {
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 2px solid #ddd;
+        }
+
+        .social-title {
+            text-align: center;
+            font-weight: 700;
+            color: #666;
+            margin-bottom: 15px;
+        }
+
+        .social-buttons {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .social-button {
+            flex: 1;
+            min-width: 120px;
+            padding: 12px;
+            border: 2px solid;
+            border-radius: 15px;
+            text-align: center;
+            font-weight: 700;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .google-btn {
+            border-color: #db4437;
+            color: #db4437;
+            background: #fff;
+        }
+
+        .google-btn:hover {
+            background: #db4437;
+            color: #fff;
+            transform: scale(1.05);
+        }
+
+        .discord-btn {
+            border-color: #7289da;
+            color: #7289da;
+            background: #fff;
+        }
+
+        .discord-btn:hover {
+            background: #7289da;
+            color: #fff;
+            transform: scale(1.05);
+        }
+
+        .twitter-btn {
+            border-color: #1da1f2;
+            color: #1da1f2;
+            background: #fff;
+        }
+
+        .twitter-btn:hover {
+            background: #1da1f2;
+            color: #fff;
+            transform: scale(1.05);
+        }
+
+        /* Footer Links */
+        .footer-links {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .footer-links a {
+            color: #81c784;
+            text-decoration: none;
+            margin: 0 10px;
+            font-size: 14px;
+            text-shadow: 1px 1px 0px #000;
+        }
+
+        .footer-links a:hover {
+            color: #e91e63;
+            text-shadow: 1px 1px 0px #000, 0 0 5px #e91e63;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .container {
+                width: 95%;
+                padding: 10px;
+            }
+
+            .logo {
+                font-size: 36px;
+            }
+
+            .form-tabs {
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .social-buttons {
+                flex-direction: column;
+            }
+
+            .social-button {
+                min-width: auto;
+            }
+        }
+
+        /* Floating particles */
+        .particle {
+            position: fixed;
+            pointer-events: none;
+            z-index: -1;
+            width: 4px;
+            height: 4px;
+            background: radial-gradient(circle, #e91e63, transparent);
+            border-radius: 50%;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); opacity: 0.7; }
+            50% { transform: translateY(-20px) rotate(180deg); opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <div class="logo">◊ DreamSwap ◊</div>
+            <div class="tagline">Enter the lucid network of collective dreams</div>
+        </div>
+
+        <!-- Form Container -->
+        <div class="form-container">
+            <div class="form-header">
+                <div class="form-tabs">
+                    <button class="tab-button active" data-tab="login">Login</button>
+                    <button class="tab-button" data-tab="register">Join Network</button>
+                </div>
+            </div>
+
+            <div class="form-content">
+                <!-- Login Form -->
+                <form id="loginForm" class="form-tab active">
+                    <div class="form-group">
+                        <label for="loginEmail">Dream Network ID</label>
+                        <input type="email" id="loginEmail" class="form-input" placeholder="your@email.com" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="loginPassword">Lucid Key</label>
+                        <input type="password" id="loginPassword" class="form-input" placeholder="••••••••" required>
+                    </div>
+                    <button type="submit" class="submit-button">🌙 Enter Dream Network</button>
+                </form>
+
+                <!-- Register Form -->
+                <form id="registerForm" class="form-tab" style="display: none;">
+                    <div class="form-group">
+                        <label for="registerUsername">Dream Handle</label>
+                        <input type="text" id="registerUsername" class="form-input" placeholder="DreamWeaver92" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="registerEmail">Dream Network ID</label>
+                        <input type="email" id="registerEmail" class="form-input" placeholder="your@email.com" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="registerPassword">Lucid Key</label>
+                        <input type="password" id="registerPassword" class="form-input" placeholder="Create a strong password" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="confirmPassword">Confirm Lucid Key</label>
+                        <input type="password" id="confirmPassword" class="form-input" placeholder="Confirm your password" required>
+                    </div>
+
+                    <!-- Dream Personality Quiz -->
+                    <div class="quiz-section" id="quizSection">
+                        <div class="quiz-title">🔮 Dream Personality Quiz</div>
+                        
+                        <div class="quiz-question">
+                            <label>What type of dreamer are you?</label>
+                            <div class="radio-group">
+                                <div class="radio-option">
+                                    <input type="radio" name="dreamerType" value="lucid" id="lucid">
+                                    <label for="lucid">🌟 Lucid Explorer - I control my dreams</label>
+                                </div>
+                                <div class="radio-option">
+                                    <input type="radio" name="dreamerType" value="vivid" id="vivid">
+                                    <label for="vivid">🎨 Vivid Visualizer - My dreams are like movies</label>
+                                </div>
+                                <div class="radio-option">
+                                    <input type="radio" name="dreamerType" value="symbolic" id="symbolic">
+                                    <label for="symbolic">🔮 Symbolic Sage - I dream in metaphors</label>
+                                </div>
+                                <div class="radio-option">
+                                    <input type="radio" name="dreamerType" value="prophetic" id="prophetic">
+                                    <label for="prophetic">🌙 Prophetic Dreamer - My dreams predict things</label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="quiz-question">
+                            <label>Your dream world is usually:</label>
+                            <div class="radio-group">
+                                <div class="radio-option">
+                                    <input type="radio" name="dreamWorld" value="fantastical" id="fantastical">
+                                    <label for="fantastical">✨ Fantastical - Magic and impossible things</label>
+                                </div>
+                                <div class="radio-option">
+                                    <input type="radio" name="dreamWorld" value="realistic" id="realistic">
+                                    <label for="realistic">🏠 Realistic - Like real life but twisted</label>
+                                </div>
+                                <div class="radio-option">
+                                    <input type="radio" name="dreamWorld" value="surreal" id="surreal">
+                                    <label for="surreal">🌈 Surreal - Abstract and bizarre</label>
+                                </div>
+                                <div class="radio-option">
+                                    <input type="radio" name="dreamWorld" value="nostalgic" id="nostalgic">
+                                    <label for="nostalgic">💭 Nostalgic - Memories and past places</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="submit-button">🚀 Join the Dream Network</button>
+                </form>
+
+                <!-- Social Login -->
+                <div class="social-login">
+                    <div class="social-title">Quick Network Access</div>
+                    <div class="social-buttons">
+                        <a href="#" class="social-button google-btn">
+                            <span>📧</span> Google
+                        </a>
+                        <a href="#" class="social-button discord-btn">
+                            <span>🎮</span> Discord
+                        </a>
+                        <a href="#" class="social-button twitter-btn">
+                            <span>🐦</span> Twitter
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer Links -->
+        <div class="footer-links">
+            <a href="index.html">← Back to Homepage</a>
+            <a href="#">Forgot Password?</a>
+            <a href="#">Privacy Policy</a>
+        </div>
+    </div>
+
+    <script>
+        // Tab switching
+        document.querySelectorAll('.tab-button').forEach(button => {
+            button.addEventListener('click', () => {
+                const tabName = button.dataset.tab;
+                
+                // Update tab buttons
+                document.querySelectorAll('.tab-button').forEach(btn => btn.classList.remove('active'));
+                button.classList.add('active');
+                
+                // Update forms
+                document.querySelectorAll('.form-tab').forEach(form => {
+                    form.style.display = 'none';
+                    form.classList.remove('active');
+                });
+                
+                const targetForm = tabName === 'login' ? 'loginForm' : 'registerForm';
+                const form = document.getElementById(targetForm);
+                form.style.display = 'block';
+                form.classList.add('active');
+                
+                // Show quiz for register
+                const quizSection = document.getElementById('quizSection');
+                if (tabName === 'register') {
+                    setTimeout(() => {
+                        quizSection.classList.add('active');
+                    }, 300);
+                } else {
+                    quizSection.classList.remove('active');
+                }
+            });
+        });
+
+        // Form submissions
+        document.getElementById('loginForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const email = document.getElementById('loginEmail').value;
+            const password = document.getElementById('loginPassword').value;
+            
+            if (email && password) {
+                // Simulate login success
+                showSuccessMessage('🌙 Welcome back to the Dream Network!');
+                setTimeout(() => {
+                    window.location.href = 'index.html';
+                }, 2000);
+            }
+        });
+
+        document.getElementById('registerForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const username = document.getElementById('registerUsername').value;
+            const email = document.getElementById('registerEmail').value;
+            const password = document.getElementById('registerPassword').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+            
+            if (password !== confirmPassword) {
+                showErrorMessage('Lucid Keys do not match!');
+                return;
+            }
+            
+            if (username && email && password) {
+                // Get quiz results
+                const dreamerType = document.querySelector('input[name="dreamerType"]:checked')?.value;
+                const dreamWorld = document.querySelector('input[name="dreamWorld"]:checked')?.value;
+                
+                showSuccessMessage(`🚀 Welcome to the Dream Network, ${username}!`);
+                setTimeout(() => {
+                    window.location.href = 'index.html';
+                }, 2000);
+            }
+        });
+
+        // Success/Error messages
+        function showSuccessMessage(message) {
+            const messageDiv = document.createElement('div');
+            messageDiv.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background: linear-gradient(45deg, #81c784, #4caf50);
+                color: white;
+                padding: 15px 25px;
+                border-radius: 15px;
+                border: 3px solid #fff;
+                font-weight: 700;
+                z-index: 1000;
+                animation: slideIn 0.5s ease-out;
+            `;
+            messageDiv.textContent = message;
+            document.body.appendChild(messageDiv);
+            
+            setTimeout(() => messageDiv.remove(), 3000);
+        }
+
+        function showErrorMessage(message) {
+            const messageDiv = document.createElement('div');
+            messageDiv.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background: linear-gradient(45deg, #e91e63, #f44336);
+                color: white;
+                padding: 15px 25px;
+                border-radius: 15px;
+                border: 3px solid #fff;
+                font-weight: 700;
+                z-index: 1000;
+                animation: slideIn 0.5s ease-out;
+            `;
+            messageDiv.textContent = message;
+            document.body.appendChild(messageDiv);
+            
+            setTimeout(() => messageDiv.remove(), 3000);
+        }
+
+        // Add animation styles
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes slideIn {
+                0% { transform: translateX(100%); opacity: 0; }
+                100% { transform: translateX(0); opacity: 1; }
+            }
+        `;
+        document.head.appendChild(style);
+
+        // Floating particles
+        function createParticle() {
+            const particle = document.createElement('div');
+            particle.className = 'particle';
+            particle.style.left = Math.random() * 100 + '%';
+            particle.style.animationDelay = Math.random() * 3 + 's';
+            particle.style.animationDuration = (Math.random() * 3 + 3) + 's';
+            document.body.appendChild(particle);
+            
+            setTimeout(() => particle.remove(), 6000);
+        }
+
+        // Create particles periodically
+        setInterval(createParticle, 1000);
+
+        // Social login handlers
+        document.querySelectorAll('.social-button').forEach(button => {
+            button.addEventListener('click', (e) => {
+                e.preventDefault();
+                const provider = button.textContent.trim().split(' ')[1];
+                showSuccessMessage(`🔗 Connecting to ${provider}...`);
+                
+                setTimeout(() => {
+                    showSuccessMessage('🌙 Connected! Welcome to the Dream Network!');
+                    setTimeout(() => {
+                        window.location.href = 'index.html';
+                    }, 1500);
+                }, 2000);
+            });
+        });
+
+        // Input focus effects
+        document.querySelectorAll('.form-input').forEach(input => {
+            input.addEventListener('focus', () => {
+                input.parentElement.style.transform = 'scale(1.02)';
+            });
+            
+            input.addEventListener('blur', () => {
+                input.parentElement.style.transform = '';
+            });
+        });
+    </script>
+</body>
+</html>
